@@ -1,19 +1,28 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Orbis.Nft</title>
+<!-- v29t1856 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Condiment&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Anton&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
+  @font-face {
+    font-family: 'Bellamy Stevenson';
+    src: local('Bellamy Stevenson'), local('BellamyStevenson');
+    font-weight: normal;
+    font-style: normal;
+  }
+
   :root {
     --bg: #010828;
     --cream: #EFF4FF;
     --neon: #6FFF00;
+    --blue: #0000FF;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,18 +30,22 @@
   body {
     background: var(--bg);
     color: var(--cream);
-    font-family: 'Anton', sans-serif;
+    font-family: 'Noto Sans SC', 'Source Han Sans SC', '微软雅黑', sans-serif;
     overflow-x: hidden;
   }
 
   .font-anton { font-family: 'Anton', sans-serif; }
-  .font-condiment { font-family: 'Condiment', cursive; }
-  .font-mono { font-family: 'Courier New', Courier, monospace; }
+  .font-source { font-family: 'Noto Sans SC', 'Source Han Sans SC', sans-serif; }
+  .font-bellamy { font-family: 'Bellamy Stevenson', 'Alex Brush', 'Great Vibes', 'Brush Script MT', cursive; }
 
   .text-cream { color: var(--cream); }
   .text-neon { color: var(--neon); }
+  .text-blue { color: var(--blue); }
   .bg-neon { background-color: var(--neon); }
   .bg-deep { background-color: var(--bg); }
+
+  .font-bold-700 { font-weight: 700; }
+  .font-bold-900 { font-weight: 900; }
 
   .liquid-glass {
     background: rgba(255, 255, 255, 0.01);
@@ -60,434 +73,535 @@
     pointer-events: none;
   }
 
-  .texture-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 50;
-    pointer-events: none;
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
-    background-size: cover;
-    mix-blend-mode: lighten;
-    opacity: 0.6;
-  }
-
   .rounded-b-32 { border-bottom-left-radius: 32px; border-bottom-right-radius: 32px; }
   .mix-blend-exclusion { mix-blend-mode: exclusion; }
 
-  .gradient-purple {
-    background: linear-gradient(135deg, #b724ff, #7c3aed);
-  }
-
   ::-webkit-scrollbar { width: 6px; }
-  /* Animations */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .scale-in {
-    opacity: 0;
-    transform: scale(0.9);
-    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .scale-in.visible {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  /* Smooth section transition */
-  .section-transition {
-    position: relative;
-  }
-  .section-transition::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 80px;
-    background: linear-gradient(to bottom, rgba(1,8,40,0), rgba(1,8,40,1));
-    pointer-events: none;
-    z-index: 5;
-  }
   ::-webkit-scrollbar-track { background: var(--bg); }
-  /* Animations */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .scale-in {
-    opacity: 0;
-    transform: scale(0.9);
-    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .scale-in.visible {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  /* Smooth section transition */
-  .section-transition {
-    position: relative;
-  }
-  .section-transition::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 80px;
-    background: linear-gradient(to bottom, rgba(1,8,40,0), rgba(1,8,40,1));
-    pointer-events: none;
-    z-index: 5;
-  }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
-  /* Animations */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .scale-in {
-    opacity: 0;
-    transform: scale(0.9);
-    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .scale-in.visible {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  /* Smooth section transition */
-  .section-transition {
-    position: relative;
-  }
-  .section-transition::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 80px;
-    background: linear-gradient(to bottom, rgba(1,8,40,0), rgba(1,8,40,1));
-    pointer-events: none;
-    z-index: 5;
-  }
 
   .max-w-1831 { max-width: 1831px; margin-left: auto; margin-right: auto; }
+
+  .hero-mask { position: relative; }
+  .hero-mask::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent 0%, #010828 100%);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  .design-breathe {
+    animation: focusBlur 20s ease-in-out infinite;
+  }
+  @keyframes focusBlur {
+    0%, 100% { filter: blur(4px); opacity: 0.4; }
+    50% { filter: blur(0); opacity: 0.65; }
+  }
+
+  .secondary-page {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: var(--bg);
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .secondary-page.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* Tool icon styles */
+  .tool-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .tech-bracket {
+    text-shadow: 0 0 15px rgba(111, 255, 0, 0.6), 0 0 30px rgba(111, 255, 0, 0.3);
+  }
+  .tool-icon:hover {
+    transform: translateY(-2px);
+  }
+  .tool-icon svg {
+    width: 36px;
+    height: 36px;
+    display: block;
+  }
+
+  .hero-title-text {
+    line-height: 0.85;
+    letter-spacing: 0.04em;
+    user-select: none;
+  }
 </style>
 </head>
 <body>
 
-<!-- ====== SECTION 1: HERO ====== -->
-<section class="relative w-full min-h-screen rounded-b-32 overflow-hidden">
+<!-- ====== MAIN PAGE ====== -->
+<div id="main-page">
+
+<!-- SECTION 1: HERO -->
+<section id="hero" class="relative w-full min-h-screen rounded-b-32 overflow-hidden hero-mask fade-up">
   <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
     <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_045634_e1c98c76-1265-4f5c-882a-4276f2080894.mp4" type="video/mp4">
   </video>
-
-  <div class="relative z-10 max-w-1831 mx-auto px-4 sm:px-6 md:px-8 lg:px-12 min-h-screen flex flex-col">
-
-    <header class="flex items-center justify-center pt-6 lg:pt-8 relative">
-      <div class="absolute left-0 text-[16px] font-anton uppercase tracking-wider text-cream">Orbis.Nft</div>
+  <div class="relative z-10 w-full min-h-screen flex flex-col px-6 sm:px-8 md:px-10 lg:px-12 xl:px-16">
+    <header class="flex items-center justify-center pt-6 lg:pt-8">
       <nav class="hidden lg:block liquid-glass rounded-[28px] px-[52px] py-[24px]">
         <div class="flex items-center gap-8">
-          <a href="#" class="font-anton text-[13px] uppercase tracking-wider text-cream hover:text-neon transition-colors">主页</a>
-          <a href="#" class="font-anton text-[13px] uppercase tracking-wider text-cream hover:text-neon transition-colors">个人简介</a>
-          <a href="#" class="font-anton text-[13px] uppercase tracking-wider text-cream hover:text-neon transition-colors">目录</a>
-          <a href="#" class="font-anton text-[13px] uppercase tracking-wider text-cream hover:text-neon transition-colors">联系方式</a>
+          <a href="#hero" class="font-source text-[13px] font-bold-700 text-cream hover:text-neon transition-colors">主页</a>
+          <a href="#about" class="font-source text-[13px] font-bold-700 text-cream hover:text-neon transition-colors">个人简介</a>
+          <a href="javascript:void(0)" onclick="openPage('page-1')" class="font-source text-[13px] font-bold-700 text-cream hover:text-neon transition-colors">作品展示</a>
+          <a href="#profile" class="font-source text-[13px] font-bold-700 text-cream hover:text-neon transition-colors">关于我</a>
         </div>
       </nav>
     </header>
 
-    <div class="flex-1 flex flex-col justify-center relative pb-20 lg:pb-0">
-      <div class="hidden lg:flex flex-col gap-3 absolute top-0 right-4 md:right-8">
-        <a href="#" class="liquid-glass w-14 h-14 rounded-[1rem] flex items-center justify-center hover:bg-white/10 transition-colors"><i data-lucide="mail" class="w-5 h-5 text-cream"></i></a>
-        <a href="#" class="liquid-glass w-14 h-14 rounded-[1rem] flex items-center justify-center hover:bg-white/10 transition-colors"><i data-lucide="twitter" class="w-5 h-5 text-cream"></i></a>
-        <a href="#" class="liquid-glass w-14 h-14 rounded-[1rem] flex items-center justify-center hover:bg-white/10 transition-colors"><i data-lucide="github" class="w-5 h-5 text-cream"></i></a>
+    <div class="flex-1 flex flex-col justify-between py-10 sm:py-12 md:py-14">
+
+      <!-- TOP: Brand Design -->
+      <div class="w-full text-center select-none overflow-hidden">
+        <h1 class="font-anton uppercase text-cream text-[10.5vw] leading-[0.85] tracking-[0.02em] whitespace-nowrap">
+          Brand <span class="text-neon">Design</span>
+        </h1>
       </div>
 
-      <!-- Mobile social (horizontal below heading) -->
-      <div class="flex lg:hidden justify-center gap-3 mt-10">
-        <a href="#" class="liquid-glass w-14 h-14 rounded-[1rem] flex items-center justify-center hover:bg-white/10 transition-colors"><i data-lucide="mail" class="w-5 h-5 text-cream"></i></a>
-        <a href="#" class="liquid-glass w-14 h-14 rounded-[1rem] flex items-center justify-center hover:bg-white/10 transition-colors"><i data-lucide="twitter" class="w-5 h-5 text-cream"></i></a>
-        <a href="#" class="liquid-glass w-14 h-14 rounded-[1rem] flex items-center justify-center hover:bg-white/10 transition-colors"><i data-lucide="github" class="w-5 h-5 text-cream"></i></a>
+      <!-- BOTTOM ROW -->
+      <div class="flex items-center justify-between w-full">
+
+        <!-- Left group: 2026 + AIGC/VD -->
+        <div class="flex items-center gap-3 sm:gap-4 md:gap-5">
+          <span class="font-anton uppercase text-cream text-[20px] sm:text-[26px] md:text-[32px] lg:text-[38px] xl:text-[40px] leading-none">2026</span>
+          <div class="flex-shrink-0">
+            <p class="font-anton uppercase text-neon text-[20px] leading-[1.2] translate-y-[2px]">Aigc</p>
+            <p class="font-anton uppercase text-cream/80 text-[20px] leading-[1.2] mt-1 -translate-y-[2px]">Visual Design</p>
+          </div>
+        </div>
+
+        <!-- Right: Tool icons -->
+        <div class="flex items-center gap-2 sm:gap-3 md:gap-4 flex-shrink-0 ml-auto">
+
+          <div class="tool-icon" title="Photoshop">
+            <svg viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="6" fill="#001E36"/>
+              <text x="18" y="25" text-anchor="middle" fill="#31A8FF" font-family="Arial" font-weight="900" font-size="14">Ps</text>
+            </svg>
+          </div>
+
+          <div class="tool-icon" title="Illustrator">
+            <svg viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="6" fill="#1F0000"/>
+              <text x="18" y="25" text-anchor="middle" fill="#FF9A00" font-family="Arial" font-weight="900" font-size="14">Ai</text>
+            </svg>
+          </div>
+
+          <div class="tool-icon" title="Figma">
+            <svg viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="6" fill="#0D0D0D"/>
+              <g transform="translate(8,6)">
+                <ellipse cx="10" cy="12" rx="5" ry="5" fill="#F24E1E"/>
+                <ellipse cx="10" cy="2" rx="5" ry="5" fill="#0ACF83"/>
+                <ellipse cx="20" cy="2" rx="5" ry="5" fill="#A259FF"/>
+                <rect x="15" y="12" width="10" height="10" rx="5" fill="#FF7262"/>
+                <ellipse cx="10" cy="22" rx="5" ry="5" fill="#F24E1E"/>
+              </g>
+            </svg>
+          </div>
+
+          <div class="tool-icon" title="Xmind">
+            <svg viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="6" fill="#148EFF"/>
+              <text x="18" y="25" text-anchor="middle" fill="white" font-family="Arial" font-weight="900" font-size="13">XM</text>
+            </svg>
+          </div>
+
+          <div class="tool-icon" title="ComfyUI">
+            <svg viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="6" fill="#1a1a2e"/>
+              <g transform="translate(8,8)">
+                <rect width="9" height="9" rx="1.5" fill="#6ADCF3"/>
+                <rect x="11" width="9" height="9" rx="1.5" fill="#6ADCF3"/>
+                <rect y="11" width="9" height="9" rx="1.5" fill="#6ADCF3"/>
+                <rect x="11" y="11" width="9" height="9" rx="1.5" fill="#6ADCF3"/>
+              </g>
+            </svg>
+          </div>
+
+          <div class="tool-icon" title="MasterGo">
+            <svg viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="6" fill="#FF6B35"/>
+              <text x="18" y="26" text-anchor="middle" fill="white" font-family="Arial" font-weight="900" font-size="16">M</text>
+            </svg>
+          </div>
+
+          <div class="tool-icon" title="Midjourney">
+            <svg viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="6" fill="#0A0E17"/>
+              <g transform="translate(5,9)">
+                <path d="M13 0C6 0 0 6 0 13c0 7.2 5.5 13 13 13 7.5 0 13-5.8 13-13 0-7-5.5-13-13-13z" fill="none" stroke="#FF0050" stroke-width="1.8"/>
+                <path d="M5 16l5-6 3 4 3-8 4 10" stroke="#FF66B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <circle cx="13" cy="4" r="1.8" fill="#FF0050"/>
+              </g>
+            </svg>
+          </div>
+
+          <div class="tool-icon" title="Stable Diffusion">
+            <svg viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="6" fill="#4A0E4E"/>
+              <g transform="translate(8,8)">
+                <path d="M10 0C4.5 0 0 4.5 0 10s4.5 10 10 10 10-4.5 10-10S15.5 0 10 0z" fill="#9B59B6" opacity="0.4"/>
+                <path d="M10 2C5.6 2 2 5.6 2 10s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8z" fill="none" stroke="#BB8FCE" stroke-width="1.2"/>
+                <circle cx="10" cy="10" r="3" fill="#D2B4DE"/>
+              </g>
+            </svg>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
-<!-- ====== SECTION 1.5: PROFILE ====== -->
-<section class="relative w-full bg-deep py-20 sm:py-28">
-  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-deep/20 to-deep pointer-events-none z-[1]"></div>
-  <div class="max-w-1831 mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
-    <div class="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-24 fade-up">
 
-      <div class="fade-up">
-<!-- Left: Info -->
-      <div class="flex-1">
-        <h2 class="font-anton uppercase text-cream text-[32px] sm:text-[40px] md:text-[48px] lg:text-[60px] leading-tight mb-6 sm:mb-8">
-          杨杨
-        </h2>
-        <div class="w-16 h-1 bg-neon mb-6 sm:mb-8"></div>
-        <p class="font-mono text-[14px] sm:text-[15px] uppercase text-cream/80 leading-relaxed max-w-[500px] mb-8">
-          视觉设计师 · 全链路创意<br><br>
-          拥有多年视觉设计经验，专注于品牌全案设计、三维建模渲染、电商视觉及 UI/UX 设计。擅长将商业需求与创意表达结合，用设计驱动品牌价值增长。
-        </p>
-        <div class="flex flex-wrap gap-3">
-          <span class="font-mono text-[11px] uppercase text-cream/50 px-4 py-2 liquid-glass rounded-[8px]">Branding</span>
-          <span class="font-mono text-[11px] uppercase text-cream/50 px-4 py-2 liquid-glass rounded-[8px]">C4D / Blender</span>
-          <span class="font-mono text-[11px] uppercase text-cream/50 px-4 py-2 liquid-glass rounded-[8px]">Figma</span>
-          <span class="font-mono text-[11px] uppercase text-cream/50 px-4 py-2 liquid-glass rounded-[8px]">PS / AI</span>
-          <span class="font-mono text-[11px] uppercase text-cream/50 px-4 py-2 liquid-glass rounded-[8px]">电商视觉</span>
-          <span class="font-mono text-[11px] uppercase text-cream/50 px-4 py-2 liquid-glass rounded-[8px]">UI/UX</span>
-          <span class="font-mono text-[11px] uppercase text-cream/50 px-4 py-2 liquid-glass rounded-[8px]">Motion</span>
-        </div>
-      </div>
-
-      <!-- Right: Stats -->
-      </div>
-      <div class="flex flex-col gap-6">
-        <div class="liquid-glass rounded-[24px] px-8 py-6 min-w-[200px] scale-in" style="transition-delay:0.1s">
-          <span class="font-anton text-[36px] text-neon">50+</span>
-          <p class="font-mono text-[12px] uppercase text-cream/40 mt-1 tracking-wider">完成项目</p>
-        </div>
-        <div class="liquid-glass rounded-[24px] px-8 py-6 min-w-[200px] scale-in" style="transition-delay:0.2s">
-          <span class="font-anton text-[36px] text-neon">30+</span>
-          <p class="font-mono text-[12px] uppercase text-cream/40 mt-1 tracking-wider">品牌客户</p>
-        </div>
-        <div class="liquid-glass rounded-[24px] px-8 py-6 min-w-[200px] scale-in" style="transition-delay:0.3s">
-          <span class="font-anton text-[36px] text-neon">6年</span>
-          <p class="font-mono text-[12px] uppercase text-cream/40 mt-1 tracking-wider">设计经验</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-</section>
-
-<!-- ====== SECTION 2: ABOUT ====== -->
-<section class="relative w-full min-h-screen overflow-hidden">
+<!-- SECTION 2: ABOUT -->
+<section id="about" class="relative w-full min-h-screen overflow-hidden fade-up">
   <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
     <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_151551_992053d1-3d3e-4b8c-abac-45f22158f411.mp4" type="video/mp4">
   </video>
-
-  <div class="relative z-10 max-w-1831 mx-auto px-4 sm:px-6 md:px-8 lg:px-12 min-h-screen flex flex-col justify-center py-16 sm:py-20 md:py-24">
-
-    <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8 lg:gap-0 mb-12 lg:mb-0">
+  <div class="relative z-10 max-w-1831 mx-auto px-4 sm:px-6 md:px-8 lg:px-12 min-h-screen flex flex-col justify-start pt-[100px] sm:pt-[130px] md:pt-[160px]">
+    <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 lg:gap-0">
       <div class="relative">
-        <h2 class="font-anton uppercase text-cream text-[32px] sm:text-[40px] md:text-[48px] lg:text-[60px] leading-tight">
-          Hello!<br>I'm orbis
-        </h2>
+        <h2 class="font-anton uppercase text-cream text-[32px] sm:text-[40px] md:text-[48px] lg:text-[60px] leading-tight">Hello!<br>I'm <span class="text-neon">I-Yanger</span></h2>
         <div class="absolute -bottom-4 -right-4 sm:-right-6 lg:-right-8 -rotate-1 mix-blend-exclusion">
-          <span class="font-condiment text-neon text-[36px] sm:text-[48px] md:text-[60px] lg:text-[68px] whitespace-nowrap">Orbis</span>
+          <span class="text-neon text-[36px] sm:text-[48px] md:text-[60px] lg:text-[68px] whitespace-nowrap font-bellamy">Orbis</span>
         </div>
       </div>
-      <div class="max-w-[266px] lg:mt-4">
-        <p class="font-mono text-[14px] sm:text-[16px] uppercase text-cream leading-relaxed">
-          A digital object fixed beyond time and place. An exploration of distance, form, and silence in space
-        </p>
-      </div>
     </div>
+    <div class="mt-3 sm:mt-5 lg:mt-7 max-w-[700px]">
+      <p class="font-source font-bold-700 text-[13px] sm:text-[14px] md:text-[15px] text-cream/80 leading-[1.9] tracking-wider">
+        品牌设计师兼具AIGC视觉设计师，具备从品牌策化到视觉落地全链路能力。擅于通过用户洞察与供应链协同驱动设计增值，在品牌体系搭建、包装工程落地、跨职能协作方面有完整闭环经验。逻辑清晰，数据导向，适应快节奏环境。
+      </p>
+    </div>
+  </div>
+</section>
 
-    <div class="flex flex-row justify-between mt-16 lg:mt-24">
-      <div class="flex flex-col gap-12 max-w-[266px]">
-        <p class="font-mono text-[14px] sm:text-[16px] uppercase text-cream opacity-10 leading-relaxed">
-          A digital object fixed beyond time and place. An exploration of distance, form, and silence in space
-        </p>
-        <p class="font-mono text-[14px] sm:text-[16px] uppercase text-cream opacity-10 leading-relaxed">
-          A digital object fixed beyond time and place. An exploration of distance, form, and silence in space
-        </p>
+<!-- SECTION 3 removed —作品展示改为点击导航栏直接跳转二级页面 -->
+
+<!-- SECTION 4: PROFILE -->
+<section id="profile" class="relative w-full min-h-[calc(100vh+144px)] bg-deep flex items-center justify-center overflow-visible">
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-[1]">
+    <span class="font-bellamy text-blue text-[40vw] sm:text-[36vw] md:text-[32vw] lg:text-[28vw] leading-none opacity-[0.35] select-none whitespace-nowrap" style="filter:blur(4px)">
+      Design
+    </span>
+  </div>
+  <div class="relative z-10 max-w-1831 mx-auto px-4 sm:px-6 md:px-8 lg:px-12 w-full">
+    <div class="flex flex-col items-center justify-center text-center">
+      <div class="fade-up">
+        <p class="font-source text-[13px] sm:text-[14px] font-bold-700 text-blue tracking-[0.3em] mb-4 sm:mb-6">About</p>
+        <h2 class="font-source font-bold-900 text-cream text-[48px] sm:text-[64px] md:text-[80px] lg:text-[96px] leading-none mb-8 sm:mb-10">关于我</h2>
       </div>
-      <div class="hidden lg:flex flex-col gap-12 max-w-[266px]">
-        <p class="font-mono text-[14px] sm:text-[16px] uppercase text-cream opacity-10 leading-relaxed">
-          A digital object fixed beyond time and place. An exploration of distance, form, and silence in space
-        </p>
-        <p class="font-mono text-[14px] sm:text-[16px] uppercase text-cream opacity-10 leading-relaxed">
-          A digital object fixed beyond time and place. An exploration of distance, form, and silence in space
-        </p>
+      <div class="w-20 h-[3px] bg-neon mb-10 sm:mb-12 fade-up"></div>
+      <div class="fade-up max-w-[800px] mx-auto">
+        <p class="font-source font-bold-900 text-[14px] sm:text-[16px] md:text-[17px] text-cream/90 leading-[1.9] tracking-wider px-4">品牌设计师出身，用 AIGC 拓宽视觉的边界。从品牌策略到动态设计，从概念到落地，AI工作流让每一个项目都更快、更准、更出彩。</p>
+      </div>
+
+      <!-- Skills Tags -->
+      <div class="fade-up mt-10 flex flex-wrap gap-3 justify-center max-w-[600px] mx-auto px-4">
+        <span class="text-[11px] sm:text-[12px] font-source font-bold-700 text-neon px-4 py-2 rounded-full border border-neon/30 bg-neon/5 hover:bg-neon/15 transition-colors tracking-wider">Branding</span>
+        <span class="text-[11px] sm:text-[12px] font-source font-bold-700 text-cream/70 px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors tracking-wider">AIGC</span>
+        <span class="text-[11px] sm:text-[12px] font-source font-bold-700 text-cream/70 px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors tracking-wider">C4D</span>
+        <span class="text-[11px] sm:text-[12px] font-source font-bold-700 text-cream/70 px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors tracking-wider">Figma</span>
+        <span class="text-[11px] sm:text-[12px] font-source font-bold-700 text-cream/70 px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors tracking-wider">MasterGo</span>
+        <span class="text-[11px] sm:text-[12px] font-source font-bold-700 text-cream/70 px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors tracking-wider">ComfyUI</span>
+        <span class="text-[11px] sm:text-[12px] font-source font-bold-700 text-cream/70 px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors tracking-wider">Midjourney</span>
+        <span class="text-[11px] sm:text-[12px] font-source font-bold-700 text-cream/70 px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors tracking-wider">Stable Diffusion</span>
+        <span class="text-[11px] sm:text-[12px] font-source font-bold-700 text-cream/70 px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors tracking-wider">Photoshop</span>
+        <span class="text-[11px] sm:text-[12px] font-source font-bold-700 text-cream/70 px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors tracking-wider">Illustrator</span>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="fade-up mt-10 flex flex-wrap gap-4 sm:gap-6 justify-center">
+        <div class="liquid-glass rounded-[20px] px-7 sm:px-9 py-6 min-w-[140px] sm:min-w-[170px] text-center">
+          <p class="font-anton text-neon text-[28px] sm:text-[36px] leading-none">50+</p>
+          <p class="font-source font-bold-700 text-[11px] sm:text-[12px] text-cream/50 tracking-wider mt-2 uppercase">项目经验</p>
+        </div>
+        <div class="liquid-glass rounded-[20px] px-7 sm:px-9 py-6 min-w-[140px] sm:min-w-[170px] text-center">
+          <p class="font-anton text-neon text-[28px] sm:text-[36px] leading-none">30+</p>
+          <p class="font-source font-bold-700 text-[11px] sm:text-[12px] text-cream/50 tracking-wider mt-2 uppercase">合作客户</p>
+        </div>
+        <div class="liquid-glass rounded-[20px] px-7 sm:px-9 py-6 min-w-[140px] sm:min-w-[170px] text-center">
+          <p class="font-anton text-neon text-[28px] sm:text-[36px] leading-none">6年</p>
+          <p class="font-source font-bold-700 text-[11px] sm:text-[12px] text-cream/50 tracking-wider mt-2 uppercase">行业经验</p>
+        </div>
+      </div>
+      <div class="fade-up mt-12 sm:mt-16 flex flex-col items-center gap-8">
+        <div class="flex items-center gap-6">
+          <span class="tech-bracket font-anton text-neon text-[42px] sm:text-[56px] md:text-[66px] lg:text-[74px] leading-none tracking-[-0.15em]">[</span>
+          <span class="text-cream text-[36px] sm:text-[48px] md:text-[56px] lg:text-[64px] font-source font-bold-700">AIGC品牌设计师</span>
+          <span class="tech-bracket font-anton text-neon text-[42px] sm:text-[56px] md:text-[66px] lg:text-[74px] leading-none tracking-[-0.15em]">]</span>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 fade-up">
+          <div class="liquid-glass rounded-[16px] px-6 sm:px-8 py-5 flex items-center gap-4 min-w-[220px] sm:min-w-[280px]">
+            <div class="w-10 h-10 rounded-[10px] bg-neon/15 flex items-center justify-center shrink-0">
+              <i data-lucide="phone" class="w-5 h-5 text-neon"></i>
+            </div>
+            <div class="text-left">
+              <p class="font-source font-bold-700 text-[11px] text-cream/50 tracking-wider uppercase">Phone</p>
+              <p class="font-source font-bold-900 text-[14px] sm:text-[15px] text-cream tracking-wider whitespace-nowrap">17610351283</p>
+            </div>
+          </div>
+          <div class="liquid-glass rounded-[16px] px-6 sm:px-8 py-5 flex items-center gap-4 min-w-[220px] sm:min-w-[280px]">
+            <div class="w-10 h-10 rounded-[10px] bg-neon/15 flex items-center justify-center shrink-0">
+              <i data-lucide="mail" class="w-5 h-5 text-neon"></i>
+            </div>
+            <div class="text-left">
+              <p class="font-source font-bold-700 text-[11px] text-cream/50 tracking-wider uppercase">Email</p>
+              <p class="font-source font-bold-900 text-[14px] sm:text-[15px] text-cream tracking-wider">17610351283@163.com</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ====== SECTION 3: NFT GRID ====== -->
-<section class="relative w-full bg-deep py-20 sm:py-24 md:py-28">
-  <div class="max-w-1831 mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
-
-    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12 md:mb-16">
-      <div class="mb-8 lg:mb-0">
-        <h3 class="font-anton uppercase text-cream text-[32px] sm:text-[40px] md:text-[48px] lg:text-[60px] leading-tight">
-          Collection of
-        </h3>
-        <div class="ml-12 sm:ml-24 lg:ml-32">
-          <span class="font-condiment text-neon text-[36px] sm:text-[48px] md:text-[60px] lg:text-[68px]">Space</span>
-          <span class="font-anton uppercase text-cream text-[32px] sm:text-[40px] md:text-[48px] lg:text-[60px]"> objects</span>
-        </div>
-      </div>
-      <a href="#" class="inline-block">
-        <div class="flex items-start gap-2">
-          <span class="font-anton uppercase text-cream text-[32px] sm:text-[40px] md:text-[48px] lg:text-[60px] leading-none">SEE</span>
-          <div class="flex flex-col">
-            <span class="font-anton uppercase text-cream text-[20px] sm:text-[28px] md:text-[32px] lg:text-[36px] leading-none">ALL</span>
-            <span class="font-anton uppercase text-cream text-[20px] sm:text-[28px] md:text-[32px] lg:text-[36px] leading-none mt-1">CREATORS</span>
-          </div>
-        </div>
-        <div class="bg-neon h-[6px] sm:h-[8px] lg:h-[10px] w-full mt-2"></div>
-      </a>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-      <!-- Card 1 -->
-      <div class="liquid-glass rounded-[32px] p-[18px] hover:bg-white/10 transition-colors">
-        <div class="relative w-full rounded-[24px] overflow-hidden" style="padding-bottom:100%;">
-          <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
-            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_053923_22c0a6a5-313c-474c-85ff-3b50d25e944a.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="liquid-glass rounded-[20px] px-5 py-4 flex items-center justify-between mt-4">
-          <div>
-            <span class="font-mono text-[11px] uppercase text-cream/70">RARITY SCORE:</span>
-            <span class="font-anton text-[16px] uppercase text-cream block">8.7/10</span>
-          </div>
-          <button class="gradient-purple w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110" style="box-shadow:0 10px 15px -3px rgba(183,36,255,0.5)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="liquid-glass rounded-[32px] p-[18px] hover:bg-white/10 transition-colors">
-        <div class="relative w-full rounded-[24px] overflow-hidden" style="padding-bottom:100%;">
-          <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
-            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_054411_511c1b7a-fb2f-42ef-bf6c-32c0b1a06e79.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="liquid-glass rounded-[20px] px-5 py-4 flex items-center justify-between mt-4">
-          <div>
-            <span class="font-mono text-[11px] uppercase text-cream/70">RARITY SCORE:</span>
-            <span class="font-anton text-[16px] uppercase text-cream block">9/10</span>
-          </div>
-          <button class="gradient-purple w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110" style="box-shadow:0 10px 15px -3px rgba(183,36,255,0.5)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="liquid-glass rounded-[32px] p-[18px] hover:bg-white/10 transition-colors">
-        <div class="relative w-full rounded-[24px] overflow-hidden" style="padding-bottom:100%;">
-          <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
-            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_055427_ac7035b5-9f3b-4289-86fc-941b2432317d.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="liquid-glass rounded-[20px] px-5 py-4 flex items-center justify-between mt-4">
-          <div>
-            <span class="font-mono text-[11px] uppercase text-cream/70">RARITY SCORE:</span>
-            <span class="font-anton text-[16px] uppercase text-cream block">8.2/10</span>
-          </div>
-          <button class="gradient-purple w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110" style="box-shadow:0 10px 15px -3px rgba(183,36,255,0.5)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ====== SECTION 4: CTA ====== -->
-<section class="relative w-full bg-deep">
+<!-- SECTION 5: CTA -->
+<section id="cta" class="relative w-full bg-deep fade-up">
   <div class="relative w-full">
     <video autoplay loop muted playsinline class="w-full h-auto block">
       <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_055729_72d66327-b59e-4ae9-bb70-de6ccb5ecdb0.mp4" type="video/mp4">
     </video>
-
     <div class="absolute inset-0 flex items-center justify-end lg:pr-[20%] lg:pl-[15%]">
       <div class="relative text-right">
         <div class="absolute -top-8 sm:-top-12 lg:-top-16 right-0 -rotate-1 mix-blend-exclusion">
-          <span class="font-condiment text-neon text-[17px] sm:text-[28px] md:text-[42px] lg:text-[68px] whitespace-nowrap">Go beyond</span>
+          <span class="text-neon text-[17px] sm:text-[28px] md:text-[42px] lg:text-[68px] font-bellamy">Go beyond</span>
         </div>
         <h4 class="font-anton uppercase text-cream text-[16px] sm:text-[28px] md:text-[42px] lg:text-[60px] leading-tight">
           <div class="mb-4 sm:mb-6 md:mb-8 lg:mb-12">JOIN US.</div>
-          REVEAL WHAT'S HIDDEN.<br>
-          DEFINE WHAT'S NEXT.<br>
-          FOLLOW THE SIGNAL.
+          REVEAL WHAT'S HIDDEN.<br>DEFINE WHAT'S NEXT.<br>FOLLOW THE SIGNAL.
         </h4>
       </div>
     </div>
   </div>
-
-  
-      <a href="#" class="flex items-center justify-center w-[14vw] sm:w-[14.375rem] md:w-[10.78125rem] lg:w-[16.77rem] h-[14vw] sm:h-[14.375rem] md:h-[10.78125rem] lg:h-[16.77rem] hover:bg-white/5 transition-colors"><i data-lucide="github" class="w-5 h-5 text-cream"></i></a>
-    </div>
-  </div>
 </section>
 
-<!-- ====== FOOTER ====== -->
-<section class="relative w-full bg-deep py-16">
-  <div class="max-w-1831 mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
-    <div class="liquid-glass rounded-[32px] px-8 sm:px-12 py-12 sm:py-16">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-        <div>
-          <h4 class="font-anton uppercase text-[24px] sm:text-[32px] text-cream">Contact</h4>
-          <div class="flex flex-col gap-3 mt-6 sm:mt-8">
-            <div class="flex items-center gap-4">
-              <i data-lucide="phone" class="w-5 h-5 text-neon"></i>
-              <span class="font-mono text-[16px] text-cream tracking-wider">17610351283</span>
-            </div>
-            <div class="flex items-center gap-4">
-              <i data-lucide="mail" class="w-5 h-5 text-neon"></i>
-              <span class="font-mono text-[16px] text-cream tracking-wider">17610351283@163.com</span>
+</div><!-- end main-page -->
+
+<!-- SECONDARY: 品牌全案设计 -->
+<div id="page-1" class="secondary-page">
+  <div class="min-h-screen bg-deep py-12">
+    <div class="max-w-1831 mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+      <button onclick="closePage('page-1')" class="flex items-center gap-2 text-cream/60 hover:text-neon transition-colors mb-10 group">
+        <i data-lucide="arrow-left" class="w-6 h-6 group-hover:-translate-x-1 transition-transform"></i>
+        <span class="font-source font-bold-700 text-[16px]">返回</span>
+      </button>
+      <div class="mb-12">
+        <p class="font-anton text-neon text-[36px] sm:text-[40px] leading-none tracking-wider mb-4">01</p>
+        <h2 class="font-source font-bold-900 text-cream text-[48px] sm:text-[64px] leading-none mb-4">品牌全案设计</h2>
+        <p class="font-source font-bold-700 text-[14px] text-cream/40">Brand Design</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="liquid-glass rounded-[32px] p-[18px]">
+          <div class="relative w-full rounded-[24px] overflow-hidden" style="padding-bottom:75%;">
+            <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
+              <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_053923_22c0a6a5-313c-474c-85ff-3b50d25e944a.mp4" type="video/mp4">
+            </video>
+          </div>
+          <p class="font-source font-bold-700 text-[14px] text-cream mt-4">品牌全案 · 万象香氛</p>
+        </div>
+        <div class="liquid-glass rounded-[32px] p-[18px]">
+          <div class="relative w-full rounded-[24px] overflow-hidden" style="padding-bottom:75%;">
+            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
+              <p class="font-source font-bold-700 text-cream/20 text-[14px]">项目作品</p>
             </div>
           </div>
+          <p class="font-source font-bold-700 text-[14px] text-cream mt-4">品牌全案 · 山茶集</p>
         </div>
-        <div class="text-right">
-          <p class="font-anton uppercase text-cream text-[20px] sm:text-[28px] leading-tight">
-            Orbis.Nft
-          </p>
-          <p class="font-mono text-[12px] text-cream/40 mt-2 tracking-wider">© 2026 All Rights Reserved</p>
+        <div class="liquid-glass rounded-[32px] p-[18px]">
+          <div class="relative w-full rounded-[24px] overflow-hidden" style="padding-bottom:75%;">
+            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
+              <p class="font-source font-bold-700 text-cream/20 text-[14px]">项目作品</p>
+            </div>
+          </div>
+          <p class="font-source font-bold-700 text-[14px] text-cream mt-4">品牌全案 · NOVA科技</p>
         </div>
       </div>
     </div>
   </div>
-</section>
+</div>
+
+<!-- SECONDARY: AIGC动态设计 -->
+<div id="page-2" class="secondary-page">
+  <div class="min-h-screen bg-deep py-12">
+    <div class="max-w-1831 mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+      <button onclick="closePage('page-2')" class="flex items-center gap-2 text-cream/60 hover:text-neon transition-colors mb-10 group">
+        <i data-lucide="arrow-left" class="w-6 h-6 group-hover:-translate-x-1 transition-transform"></i>
+        <span class="font-source font-bold-700 text-[16px]">返回</span>
+      </button>
+      <div class="mb-12">
+        <p class="font-anton text-neon text-[36px] sm:text-[40px] leading-none tracking-wider mb-4">02</p>
+        <h2 class="font-source font-bold-900 text-cream text-[48px] sm:text-[64px] leading-none mb-4">AIGC动态设计</h2>
+        <p class="font-source font-bold-700 text-[14px] text-cream/40">AIGC Motion Design</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="liquid-glass rounded-[32px] p-[18px]">
+          <div class="relative w-full rounded-[24px] overflow-hidden" style="padding-bottom:75%;">
+            <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
+              <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_054411_511c1b7a-fb2f-42ef-bf6c-32c0b1a06e79.mp4" type="video/mp4">
+            </video>
+          </div>
+          <p class="font-source font-bold-700 text-[14px] text-cream mt-4">AIGC动态 · 品牌动画</p>
+        </div>
+        <div class="liquid-glass rounded-[32px] p-[18px]">
+          <div class="relative w-full rounded-[24px] overflow-hidden" style="padding-bottom:75%;">
+            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
+              <p class="font-source font-bold-700 text-cream/20 text-[14px]">项目作品</p>
+            </div>
+          </div>
+          <p class="font-source font-bold-700 text-[14px] text-cream mt-4">AIGC动态 · 视觉实验</p>
+        </div>
+        <div class="liquid-glass rounded-[32px] p-[18px]">
+          <div class="relative w-full rounded-[24px] overflow-hidden" style="padding-bottom:75%;">
+            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
+              <p class="font-source font-bold-700 text-cream/20 text-[14px]">项目作品</p>
+            </div>
+          </div>
+          <p class="font-source font-bold-700 text-[14px] text-cream mt-4">AIGC动态 · 创意短片</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECONDARY: 产品设计 -->
+<div id="page-3" class="secondary-page">
+  <div class="min-h-screen bg-deep py-12">
+    <div class="max-w-1831 mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+      <button onclick="closePage('page-3')" class="flex items-center gap-2 text-cream/60 hover:text-neon transition-colors mb-10 group">
+        <i data-lucide="arrow-left" class="w-6 h-6 group-hover:-translate-x-1 transition-transform"></i>
+        <span class="font-source font-bold-700 text-[16px]">返回</span>
+      </button>
+      <div class="mb-12">
+        <p class="font-anton text-neon text-[36px] sm:text-[40px] leading-none tracking-wider mb-4">03</p>
+        <h2 class="font-source font-bold-900 text-cream text-[48px] sm:text-[64px] leading-none mb-4">产品设计</h2>
+        <p class="font-source font-bold-700 text-[14px] text-cream/40">Product Design</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="liquid-glass rounded-[32px] p-[18px]">
+          <div class="relative w-full rounded-[24px] overflow-hidden" style="padding-bottom:75%;">
+            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
+              <p class="font-source font-bold-700 text-cream/20 text-[14px]">项目作品</p>
+            </div>
+          </div>
+          <p class="font-source font-bold-700 text-[14px] text-cream mt-4">产品设计 · 香氛瓶体</p>
+        </div>
+        <div class="liquid-glass rounded-[32px] p-[18px]">
+          <div class="relative w-full rounded-[24px] overflow-hidden" style="padding-bottom:75%;">
+            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
+              <p class="font-source font-bold-700 text-cream/20 text-[14px]">项目作品</p>
+            </div>
+          </div>
+          <p class="font-source font-bold-700 text-[14px] text-cream mt-4">产品设计 · 珠宝场景</p>
+        </div>
+        <div class="liquid-glass rounded-[32px] p-[18px]">
+          <div class="relative w-full rounded-[24px] overflow-hidden" style="padding-bottom:75%;">
+            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
+              <p class="font-source font-bold-700 text-cream/20 text-[14px]">项目作品</p>
+            </div>
+          </div>
+          <p class="font-source font-bold-700 text-[14px] text-cream mt-4">产品设计 · 产品合成</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECONDARY: Web & UI -->
+<div id="page-4" class="secondary-page">
+  <div class="min-h-screen bg-deep py-12">
+    <div class="max-w-1831 mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+      <button onclick="closePage('page-4')" class="flex items-center gap-2 text-cream/60 hover:text-neon transition-colors mb-10 group">
+        <i data-lucide="arrow-left" class="w-6 h-6 group-hover:-translate-x-1 transition-transform"></i>
+        <span class="font-source font-bold-700 text-[16px]">返回</span>
+      </button>
+      <div class="mb-12">
+        <p class="font-anton text-neon text-[36px] sm:text-[40px] leading-none tracking-wider mb-4">04</p>
+        <h2 class="font-source font-bold-900 text-cream text-[48px] sm:text-[64px] leading-none mb-4">Web & UI</h2>
+        <p class="font-source font-bold-700 text-[14px] text-cream/40">Website & Interface Design</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="liquid-glass rounded-[32px] p-[18px]">
+          <div class="relative w-full rounded-[24px] overflow-hidden" style="padding-bottom:75%;">
+            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 via-violet-900 to-gray-900">
+              <p class="font-source font-bold-700 text-cream/20 text-[14px]">项目作品</p>
+            </div>
+          </div>
+          <p class="font-source font-bold-700 text-[14px] text-cream mt-4">Web & UI · 万象互联</p>
+        </div>
+        <div class="liquid-glass rounded-[32px] p-[18px]">
+          <div class="relative w-full rounded-[24px] overflow-hidden" style="padding-bottom:75%;">
+            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 via-violet-900 to-gray-900">
+              <p class="font-source font-bold-700 text-cream/20 text-[14px]">项目作品</p>
+            </div>
+          </div>
+          <p class="font-source font-bold-700 text-[14px] text-cream mt-4">Web & UI · 设计系统</p>
+        </div>
+        <div class="liquid-glass rounded-[32px] p-[18px]">
+          <div class="relative w-full rounded-[24px] overflow-hidden" style="padding-bottom:75%;">
+            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 via-violet-900 to-gray-900">
+              <i data-lucide="smartphone" class="w-12 h-12 text-cream/20"></i>
+            </div>
+          </div>
+          <p class="font-source font-bold-700 text-[14px] text-cream mt-4">Web & UI · App设计</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-  // Scroll reveal animation
-  document.addEventListener('DOMContentLoaded', function() {
-    if (typeof lucide !== 'undefined') lucide.createIcons();
+  lucide.createIcons();
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08 });
 
-    document.querySelectorAll('.fade-up, .scale-in').forEach(el => observer.observe(el));
-  });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  function openPage(id) {
+    document.getElementById('main-page').style.display = 'none';
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePage(id) {
+    document.getElementById(id).classList.remove('active');
+    document.getElementById('main-page').style.display = '';
+    document.body.style.overflow = '';
+  }
 </script>
+
 </body>
 </html>
-
-
-
-
-
